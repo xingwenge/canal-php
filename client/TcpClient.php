@@ -68,8 +68,6 @@ class TcpClient
      *            Remote port
      * @param bool $persist
      *            Whether to use a persistent socket
-     * @param string $debugHandler
-     *            Function to call for error logging
      */
     public function __construct($host = 'localhost', $port = 9090, $persist = false)
     {
@@ -203,9 +201,9 @@ class TcpClient
     /**
      * Uses stream get contents to do the reading
      *
-     * @param int $len
-     *            How many bytes
+     * @param $len How many bytes
      * @return string Binary data
+     * @throws \Exception
      */
     public function readAll($len)
     {
@@ -266,10 +264,8 @@ class TcpClient
     }
 
     /**
-     * Write to the socket.
-     *
-     * @param string $buf
-     *            The data to write
+     * @param $buf
+     * @throws \Exception
      */
     public function write($buf)
     {
@@ -300,136 +296,5 @@ class TcpClient
         if ($ret === false) {
             throw new \Exception('TSocket: Could not flush: ' . $this->host_ . ':' . $this->port_);
         }
-    }
-
-    /**
-     * 获取数据
-     *
-     * @param
-     *            $writeBinaryData
-     * @return binaryData 返回: 版本号（1位）+ 数据长度(4位)， 消息实体(数据长度-5)
-     */
-    public function request($writeBinaryData)
-    {
-        try {
-            if (! $this->isOpen()) {
-                $this->open();
-            }
-
-            // 写数据
-            $checkHeader = array(
-                18,
-                17,
-                13,
-                10,
-                9
-            );
-            $checkFooter = array(
-                9,
-                10,
-                13,
-                17,
-                18
-            );
-
-            $s = null;
-            $e = null;
-            foreach ($checkHeader as $v) {
-                $s = $s . pack('C', trim($v));
-            }
-            $e = null;
-            foreach ($checkFooter as $v) {
-                $e = $e . pack('C', trim($v));
-            }
-            $writeBinaryData = $s . $writeBinaryData . $e;
-            $this->write($writeBinaryData);
-
-            // 整个数据流： 固定头(5位) + 版本号（1位）+ 数据长度(4位)， 消息实体(数据长度-5), 固定尾部(5位)
-            // 返回: 版本号（1位）+ 数据长度(4位)， 消息实体(数据长度-5)
-            // 读数据
-            $header = $this->read(10);
-            $responseHeaerArr = unpack('c*', $header);
-
-            // 校验头部
-            if (! $this->_checkArray($checkHeader, array_slice($responseHeaerArr, 0, 5))) {
-                throw new \Exception('Check header failure!');
-            }
-            // 数据长度
-            $fetchLen = $this->_bytesToInteger($responseHeaerArr, 7);
-            try {
-                $l =  $this->_getLimit($fetchLen);
-                if ($fetchLen > $l) {
-                    throw new \Exception('get stream error, len exceed limit , len is ' . $fetchLen . 'limit is ' . $l);
-                }
-            } catch (\Exception $e) {
-                throw $e;
-            }
-            $responseBinaryData = $this->readAll($fetchLen);
-            // 校验尾部
-            $bodyArr = unpack('c*', substr($responseBinaryData, $fetchLen - 5));
-            if (! $this->_checkArray($checkFooter, array_slice($bodyArr, 0, 5))) {
-                throw new \Exception('Check footer failure!');
-            }
-
-            // 返回
-            // $returnBinary = null;
-
-            $returnBinary = substr($header, 5) . substr($responseBinaryData, 0, $fetchLen - 5);
-            return $returnBinary;
-        } catch (\Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     *
-     * @param
-     *            $arr1
-     * @param
-     *            $arr2
-     * @return bool
-     */
-    private function _checkArray($arr1, $arr2)
-    {
-        return $arr1 == $arr2;
-    }
-
-    private function _getLimit($len)
-    {
-        try {
-            $limit = ini_get('memory_limit');
-            if ($limit == -1) {
-                return 2147483647;
-            }
-            $arr = '';
-            $b = preg_match('/\d+/', $limit, $arr);
-            if ($b) {
-                $res = $arr[0];
-                $unit = substr($limit, strlen($res));
-                if (stristr($unit, 'M')) {
-                    return $res * 1024 * 8 * 0.8;
-                }
-                if (stristr($unit, 'G')) {
-                    return $res * 1024 * 1024 * 8 * 0.8;
-                } else {
-                    return $res * 8 * 0.8;
-                }
-            }
-        } catch (\Exception $e) {
-            throw $e;
-        }
-    }
-
-    private function _bytesToInteger($bytes, $position)
-    {
-        $val = 0;
-        $val = $bytes[$position + 3] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 2] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position + 1] & 0xff;
-        $val <<= 8;
-        $val |= $bytes[$position] & 0xff;
-        return $val;
     }
 }
