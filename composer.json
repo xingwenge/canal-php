@@ -1,0 +1,23 @@
+{
+    "name": "xingwenge/canal",
+    "description": "connent cannal server.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "邢文戈",
+            "email": "xingwenge@58ganji.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "google/protobuf": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Com\\Alibaba\\Otter\\Canal\\Protocol\\": "protocol/Com/Alibaba/Otter/Canal/Protocol/",
+            "GPBMetadata\\": "protocol/GPBMetadata/",
+            "client\\": "client/"
+        }
+    }
+}
