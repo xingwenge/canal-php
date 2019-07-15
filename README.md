@@ -74,7 +74,7 @@ $ composer update
 ````php
 try {
     $conn = new SimpleCanalConnector();
-    $conn->connect('127.0.0.1', 11111, true, 10, 1800, 1800);
+    $conn->connect('127.0.0.1', 11111, 10, 1800, 1800);
     $conn->checkValid();
     $conn->subscribe("1003", "example", ".*\\..*");
 

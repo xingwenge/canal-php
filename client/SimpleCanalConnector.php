@@ -30,7 +30,6 @@ class SimpleCanalConnector implements CanalConnector
     /**
      * @param $host
      * @param $port
-     * @param $persist
      * @param int $connectionTimeout
      *  Timeout in seconds
      * @param int $readTimeout
@@ -39,12 +38,12 @@ class SimpleCanalConnector implements CanalConnector
      *  Timeout in seconds
      * @throws \Exception
      */
-    public function connect($host = 'localhost', $port = 9090, $persist = false, $connectionTimeout=10, $readTimeout = 3600, $writeTimeout = 3600)
+    public function connect($host = 'localhost', $port = 9090, $connectionTimeout=10, $readTimeout = 3600, $writeTimeout = 3600)
     {
         $this->readTimeout = $readTimeout;
         $this->writeTimeout = $writeTimeout;
 
-        $this->socket = new TcpClient($host, $port, $persist);
+        $this->socket = new TcpClient($host, $port, true);
         $this->socket->setConnectTimeout($connectionTimeout);
         $this->socket->setRecvTimeout($this->readTimeout);
         $this->socket->setSendTimeout($this->writeTimeout);
