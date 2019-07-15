@@ -83,7 +83,7 @@ try {
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {
-                pt($entry);
+                Show::println($entry);
             }
         }
         sleep(1);
@@ -95,5 +95,5 @@ try {
 }
 ````
 
-更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/tree/master/sample)
+更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/sample/index.php)
 

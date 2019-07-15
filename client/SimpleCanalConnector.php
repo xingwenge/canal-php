@@ -10,6 +10,7 @@ use Com\Alibaba\Otter\Canal\Protocol\Messages;
 use Com\Alibaba\Otter\Canal\Protocol\Packet;
 use Com\Alibaba\Otter\Canal\Protocol\PacketType;
 use Com\Alibaba\Otter\Canal\Protocol\Sub;
+use function sample\ptColumn;
 
 class SimpleCanalConnector implements CanalConnector
 {
@@ -149,7 +150,13 @@ class SimpleCanalConnector implements CanalConnector
         // TODO: Implement unSubscribe() method.
     }
 
-    public function get($size)
+    /**
+     * @param int $size
+     *  batch size.
+     * @return Message|mixed
+     * @throws \Exception
+     */
+    public function get($size=100)
     {
         $message = $this->getWithoutAck($size);
 //        $this->ack($message->getId());
@@ -157,6 +164,8 @@ class SimpleCanalConnector implements CanalConnector
     }
 
     /**
+     * 允许指定batchSize，一次可以获取多条，每次返回的对象为Message
+     *
      * @param int $batchSize
      * @param int $timeout
      * @param int $unit
@@ -219,7 +228,7 @@ class SimpleCanalConnector implements CanalConnector
     /**
      * @param int $messageId
      */
-    public function ack($messageId)
+    public function ack($messageId=0)
     {
         if ($messageId) {
             $clientAck = new ClientAck();
