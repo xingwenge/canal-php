@@ -11,10 +11,7 @@ interface CanalConnector
      */
     public function checkValid();
 
-    /**
-     * @param string $filter
-     */
-    public function subscribe($filter);
+    public function subscribe();
     public function unSubscribe();
 
     /**

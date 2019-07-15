@@ -64,11 +64,9 @@ Canal的安装以及配置使用请查看 https://github.com/alibaba/canal/wiki/
 ### 2.安装
 
 ````shell
-
-git clone https://github.com/xingwenge/canal-php.git
-
-composer update
-
+$ git clone https://github.com/xingwenge/canal-php.git
+$ cd canal-php
+$ composer update
 ````
 
 ### 3.建立与Canal的连接
@@ -76,9 +74,9 @@ composer update
 ````php
 try {
     $conn = new SimpleCanalConnector();
-    $conn->connect();
+    $conn->connect('127.0.0.1', 11111, true, 10, 1800, 1800);
     $conn->checkValid();
-    $conn->subscribe(".*\\..*");
+    $conn->subscribe("1003", "example", ".*\\..*");
 
     while (true) {
         $message = $conn->get(100);

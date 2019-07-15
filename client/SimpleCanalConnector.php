@@ -19,8 +19,8 @@ class SimpleCanalConnector implements CanalConnector
     protected $writeTimeout;
     protected $packetLen = 4;
 
-    protected $destination = "example";
-    protected $clientId = 1002;
+    protected $destination;
+    protected $clientId;
 
     public function __construct()
     {
@@ -108,11 +108,16 @@ class SimpleCanalConnector implements CanalConnector
     }
 
     /**
+     * @param string $clientId
+     * @param string $destination
      * @param string $filter
      * @throws \Exception
      */
-    public function subscribe($filter)
+    public function subscribe($clientId = "1003", $destination = "example", $filter = ".*\\..*")
     {
+        $this->clientId = $clientId;
+        $this->destination = $destination;
+
         $sub = new Sub();
         $sub->setDestination($this->destination);
         $sub->setClientId($this->clientId);
