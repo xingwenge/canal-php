@@ -1,6 +1,6 @@
 # canal-php
 
-## 一.canal-php 是什么?
+## 一.canal-php 简介
 
 canal-php 是阿里巴巴开源项目 [Canal](https://github.com/alibaba/canal)是阿里巴巴mysql数据库binlog的增量订阅&消费组件 的 php 客户端。为 php 开发者提供一个更友好的使用 Canal 的方式。Canal 是mysql数据库binlog的增量订阅&消费组件。
 
@@ -53,15 +53,16 @@ canal-php  是 Canal 的 php 客户端，它与 Canal 是采用的Socket来进�
 
 6.Canal记录消费位置。
 
+![架构图](assets/architecture.png)
 
-## 五.快速入门
+## 五.快速启动
 
-### 1.安装Canal
+### 安装Canal
 
-Canal的安装以及配置使用请查看 https://github.com/alibaba/canal/wiki/QuickStart
+Canal 的安装以及配置使用请查看 https://github.com/alibaba/canal/wiki/QuickStart
 
 
-### 2.安装
+### 构建canal php客户端
 
 ````shell
 $ git clone https://github.com/xingwenge/canal-php.git
@@ -69,7 +70,7 @@ $ cd canal-php
 $ composer update
 ````
 
-### 3.建立与Canal的连接
+### 建立与Canal的连接
 
 ````php
 try {
@@ -94,6 +95,8 @@ try {
     echo $e->getMessage(), PHP_EOL;
 }
 ````
+![效果图](assets/effect.gif)
+
 
 更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/sample/index.php)
 
