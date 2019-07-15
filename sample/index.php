@@ -3,6 +3,7 @@ namespace sample;
 
 use client\SimpleCanalConnector;
 use Com\Alibaba\Otter\Canal\Protocol\Column;
+use Com\Alibaba\Otter\Canal\Protocol\Entry;
 use Com\Alibaba\Otter\Canal\Protocol\EntryType;
 use Com\Alibaba\Otter\Canal\Protocol\EventType;
 use Com\Alibaba\Otter\Canal\Protocol\RowChange;
@@ -12,7 +13,7 @@ require_once __DIR__. '/../init.php';
 
 try {
     $conn = new SimpleCanalConnector();
-    $conn->connect();
+    $conn->connect('127.0.0.1', 11111, true);
     $conn->checkValid();
     $conn->subscribe(".*\\..*");
 
@@ -32,6 +33,10 @@ try {
     echo $e->getMessage(), PHP_EOL;
 }
 
+/**
+ * @param Entry $entry
+ * @throws \Exception
+ */
 function pt($entry)
 {
     switch ($entry->getEntryType()) {

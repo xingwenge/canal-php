@@ -15,6 +15,10 @@ class SimpleCanalConnector implements CanalConnector
 {
     /** @var TcpClient */
     protected $socket;
+    protected $readTimeout;
+    protected $writeTimeout;
+    protected $packetLen = 4;
+
     protected $destination = "example";
     protected $clientId = 1002;
 
@@ -23,17 +27,31 @@ class SimpleCanalConnector implements CanalConnector
     }
 
     /**
+     * @param $host
+     * @param $port
+     * @param $persist
+     * @param int $connectionTimeout
+     *  Timeout in seconds
+     * @param int $readTimeout
+     *  Timeout in seconds
+     * @param int $writeTimeout
+     *  Timeout in seconds
      * @throws \Exception
      */
-    public function connect()
+    public function connect($host = 'localhost', $port = 9090, $persist = false, $connectionTimeout=10, $readTimeout = 3600, $writeTimeout = 3600)
     {
-        $this->socket = new TcpClient('127.0.0.1', 11111, true);
-        $this->socket->setRecvTimeout(3600000);
+        $this->readTimeout = $readTimeout;
+        $this->writeTimeout = $writeTimeout;
+
+        $this->socket = new TcpClient($host, $port, $persist);
+        $this->socket->setConnectTimeout($connectionTimeout);
+        $this->socket->setRecvTimeout($this->readTimeout);
+        $this->socket->setSendTimeout($this->writeTimeout);
         $this->socket->open();
 
         $data = $this->readNextPacket();
         $packet = new Packet();
-        $packet->mergeFromString($data); # pack("H*", "1801")
+        $packet->mergeFromString($data);
 
         if ($packet->getType() != PacketType::HANDSHAKE) {
             throw new \Exception("conn error.");
@@ -55,8 +73,8 @@ class SimpleCanalConnector implements CanalConnector
         $ca = new ClientAuth();
         $ca->setUsername($username);
         $ca->setPassword($password);
-        $ca->setNetReadTimeout(3600000);
-        $ca->setNetWriteTimeout(3600000);
+        $ca->setNetReadTimeout($this->readTimeout * 1000);
+        $ca->setNetWriteTimeout($this->writeTimeout * 1000);
 
         $packet = new Packet();
         $packet->setType(PacketType::CLIENTAUTHENTICATION);
@@ -79,7 +97,7 @@ class SimpleCanalConnector implements CanalConnector
 
     private function readNextPacket()
     {
-        $data = $this->socket->read(4);
+        $data = $this->socket->read($this->packetLen);
         return $this->socket->read(unpack("N", $data)[1]);
     }
 

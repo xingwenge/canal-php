@@ -30,20 +30,20 @@ class TcpClient
      *
      * @var int
      */
-    private $sendTimeout_ = 100;
+    private $sendTimeout = 1000000;
 
     /**
      * Recv timeout in milliseconds
      *
      * @var int
      */
-    private $recvTimeout_ = 750;
+    private $recvTimeout = 1000000;
     
     /**
-     * connect time out
+     * connect time out in second
      * @var unknown
      */
-    private $connectTimeout_ = 1000;
+    private $connectTimeout = 10;
 
     /**
      * Is send timeout set?
@@ -94,7 +94,7 @@ class TcpClient
      */
     public function setSendTimeout($timeout)
     {
-        $this->sendTimeout_ = $timeout;
+        $this->sendTimeout = $timeout;
     }
 
     /**
@@ -105,23 +105,24 @@ class TcpClient
      */
     public function setRecvTimeout($timeout)
     {
-        $this->recvTimeout_ = $timeout;
+        $this->recvTimeout = $timeout;
     }
 
     /**
      * @return unknown
      */
-    public function getConnectTimeout_()
+    public function getConnectTimeout()
     {
-        return $this->connectTimeout_;
+        return $this->connectTimeout;
     }
 
     /**
-     * @param $connectTimeout_
+     * @param $connectTimeout
+     *            Timeout in seconds.
      */
-    public function setConnectTimeout_($connectTimeout_)
+    public function setConnectTimeout($connectTimeout)
     {
-        $this->connectTimeout_ = $connectTimeout_;
+        $this->connectTimeout = $connectTimeout;
     }
 
     /**
@@ -172,9 +173,9 @@ class TcpClient
         }
 
         if ($this->persist_) {
-            $this->handle_ = @pfsockopen($this->host_, $this->port_, $errno, $errstr, $this->connectTimeout_ / 1000.0);
+            $this->handle_ = @pfsockopen($this->host_, $this->port_, $errno, $errstr, $this->connectTimeout);
         } else {
-            $this->handle_ = @fsockopen($this->host_, $this->port_, $errno, $errstr, $this->connectTimeout_ / 1000.0);
+            $this->handle_ = @fsockopen($this->host_, $this->port_, $errno, $errstr, $this->connectTimeout);
         }
 
         // Connect failed?
@@ -183,7 +184,7 @@ class TcpClient
             throw new \Exception($error, 10);
         }
 
-        stream_set_timeout($this->handle_, 0, $this->sendTimeout_);
+        stream_set_timeout($this->handle_, 0, $this->sendTimeout);
         $this->sendTimeoutSet_ = true;
     }
 
@@ -208,7 +209,7 @@ class TcpClient
     public function readAll($len)
     {
         if ($this->sendTimeoutSet_) {
-            stream_set_timeout($this->handle_, 0, $this->recvTimeout_ * 1000);
+            stream_set_timeout($this->handle_, 0, $this->recvTimeout * 1000000);
             $this->sendTimeoutSet_ = false;
         }
         // This call does not obey stream_set_timeout values!
@@ -242,13 +243,15 @@ class TcpClient
      * Read from the socket
      *
      * @param int $len
-     *            How many bytes
+     *  How many bytes
      * @return string Binary data
+     * @throws \Exception
+     *
      */
     public function read($len)
     {
         if ($this->sendTimeoutSet_) {
-            stream_set_timeout($this->handle_, 0, $this->recvTimeout_ * 1000);
+            stream_set_timeout($this->handle_, 0, $this->recvTimeout * 1000000);
             $this->sendTimeoutSet_ = false;
         }
         $data = fread($this->handle_, $len);
@@ -264,13 +267,13 @@ class TcpClient
     }
 
     /**
-     * @param $buf
+     * @param $buf Binary data
      * @throws \Exception
      */
     public function write($buf)
     {
         if (! $this->sendTimeoutSet_) {
-            stream_set_timeout($this->handle_, 0, $this->sendTimeout_ * 1000);
+            stream_set_timeout($this->handle_, 0, $this->sendTimeout);
             $this->sendTimeoutSet_ = true;
         }
         while (strlen($buf) > 0) {

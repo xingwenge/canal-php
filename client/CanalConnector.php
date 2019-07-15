@@ -7,11 +7,9 @@ interface CanalConnector
     public function disConnect();
 
     /**
-     * @param $username
-     * @param $password
      * @return mixed
      */
-    public function checkValid($username, $password);
+    public function checkValid();
 
     /**
      * @param string $filter
