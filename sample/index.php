@@ -13,7 +13,7 @@ try {
     $conn->subscribe("example", ".*\\..*");
 
     while (true) {
-        $message = $conn->get(100);
+        $message = $conn->get(10);
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {

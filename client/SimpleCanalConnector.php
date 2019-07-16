@@ -4,13 +4,13 @@ namespace client;
 use Com\Alibaba\Otter\Canal\Protocol\Ack;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAck;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAuth;
+use Com\Alibaba\Otter\Canal\Protocol\ClientRollback;
 use Com\Alibaba\Otter\Canal\Protocol\Entry;
 use Com\Alibaba\Otter\Canal\Protocol\Get;
 use Com\Alibaba\Otter\Canal\Protocol\Messages;
 use Com\Alibaba\Otter\Canal\Protocol\Packet;
 use Com\Alibaba\Otter\Canal\Protocol\PacketType;
 use Com\Alibaba\Otter\Canal\Protocol\Sub;
-use function sample\ptColumn;
 
 class SimpleCanalConnector implements CanalConnector
 {
@@ -25,6 +25,14 @@ class SimpleCanalConnector implements CanalConnector
 
     public function __construct()
     {
+    }
+
+    public function __destruct()
+    {
+        if ($this->socket) {
+            $this->rollback(0);
+            $this->socket->close();
+        }
     }
 
     /**
@@ -90,7 +98,7 @@ class SimpleCanalConnector implements CanalConnector
         $ack = new Ack();
         $ack->mergeFromString($packet->getBody());
         if ($ack->getErrorCode() > 0) {
-            throw new \Exception(sprintf("Auth error. error code:%s, error message:%s", $ack->getErrorCode(), $ack->getErrorMessage()));
+            throw new \Exception(sprintf("something goes wrong when doing authentication. error code:%s, error message:%s", $ack->getErrorCode(), $ack->getErrorMessage()));
         }
     }
 
@@ -113,8 +121,10 @@ class SimpleCanalConnector implements CanalConnector
      */
     public function subscribe($destination = "example", $filter = ".*\\..*")
     {
-        $this->clientId = "1001";
+        $this->clientId = 1001;
         $this->destination = $destination;
+
+        $this->rollback(0);
 
         $sub = new Sub();
         $sub->setDestination($this->destination);
@@ -137,7 +147,7 @@ class SimpleCanalConnector implements CanalConnector
         $ack = new Ack();
         $ack->mergeFromString($packet->getBody());
         if ($ack->getErrorCode() > 0) {
-            throw new \Exception(sprintf("Subscribe error. error code:%s, error message:%s", $ack->getErrorCode(), $ack->getErrorMessage()));
+            throw new \Exception(sprintf("Failed to subscribe. error code:%s, error message:%s", $ack->getErrorCode(), $ack->getErrorMessage()));
         }
     }
 
@@ -152,7 +162,7 @@ class SimpleCanalConnector implements CanalConnector
      * @return Message|mixed
      * @throws \Exception
      */
-    public function get($size=100)
+    public function get($size=10)
     {
         $message = $this->getWithoutAck($size);
         $this->ack($message->getId());
@@ -168,7 +178,7 @@ class SimpleCanalConnector implements CanalConnector
      * @return Message
      * @throws \Exception
      */
-    public function getWithoutAck($batchSize=1000, $timeout=-1, $unit=-1)
+    public function getWithoutAck($batchSize=10, $timeout=-1, $unit=-1)
     {
         $get = new Get();
         $get->setClientId($this->clientId);
@@ -181,6 +191,7 @@ class SimpleCanalConnector implements CanalConnector
         $packet = new Packet();
         $packet->setType(PacketType::GET);
         $packet->setBody($get->serializeToString());
+
         $this->writeWithHeader($packet->serializeToString());
 
         $data = $this->readNextPacket();
@@ -234,12 +245,22 @@ class SimpleCanalConnector implements CanalConnector
             $packet = new Packet();
             $packet->setType(PacketType::CLIENTACK);
             $packet->setBody($clientAck->serializeToString());
+
             $this->writeWithHeader($packet->serializeToString());
         }
     }
 
-    public function rollback()
+    public function rollback($batchId=0)
     {
-        // TODO: Implement rollback() method.
+        $cb = new ClientRollback();
+        $cb->setBatchId($batchId);
+        $cb->setClientId($this->clientId);
+        $cb->setDestination($this->destination);
+
+        $packet = new Packet();
+        $packet->setType(PacketType::CLIENTROLLBACK);
+        $packet->setBody($cb->serializeToString());
+
+        $this->writeWithHeader($packet->serializeToString());
     }
 }
