@@ -79,8 +79,7 @@ class SimpleCanalConnector implements CanalConnector
         $packet = new Packet();
         $packet->setType(PacketType::CLIENTAUTHENTICATION);
         $packet->setBody($ca->serializeToString());
-        $data = $packet->serializeToString();
-        $this->writeWithHeader($data);
+        $this->writeWithHeader($packet->serializeToString());
 
         $data = $this->readNextPacket();
         $packet = new Packet();
@@ -108,14 +107,13 @@ class SimpleCanalConnector implements CanalConnector
     }
 
     /**
-     * @param string $clientId
      * @param string $destination
      * @param string $filter
      * @throws \Exception
      */
-    public function subscribe($clientId = "1003", $destination = "example", $filter = ".*\\..*")
+    public function subscribe($destination = "example", $filter = ".*\\..*")
     {
-        $this->clientId = $clientId;
+        $this->clientId = "1001";
         $this->destination = $destination;
 
         $sub = new Sub();
@@ -126,7 +124,6 @@ class SimpleCanalConnector implements CanalConnector
         $packet = new Packet();
         $packet->setType(PacketType::SUBSCRIPTION);
         $packet->setBody($sub->serializeToString());
-
         $this->writeWithHeader($packet->serializeToString());
 
         $data = $this->readNextPacket();
@@ -158,7 +155,7 @@ class SimpleCanalConnector implements CanalConnector
     public function get($size=100)
     {
         $message = $this->getWithoutAck($size);
-//        $this->ack($message->getId());
+        $this->ack($message->getId());
         return $message;
     }
 
@@ -184,7 +181,6 @@ class SimpleCanalConnector implements CanalConnector
         $packet = new Packet();
         $packet->setType(PacketType::GET);
         $packet->setBody($get->serializeToString());
-
         $this->writeWithHeader($packet->serializeToString());
 
         $data = $this->readNextPacket();
@@ -238,7 +234,6 @@ class SimpleCanalConnector implements CanalConnector
             $packet = new Packet();
             $packet->setType(PacketType::CLIENTACK);
             $packet->setBody($clientAck->serializeToString());
-
             $this->writeWithHeader($packet->serializeToString());
         }
     }

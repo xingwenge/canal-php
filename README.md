@@ -75,9 +75,9 @@ $ composer update
 ````php
 try {
     $conn = new SimpleCanalConnector();
-    $conn->connect('127.0.0.1', 11111, 10, 1800, 1800);
+    $conn->connect("127.0.0.1", 11111, 10, 1800, 1800);
     $conn->checkValid();
-    $conn->subscribe("1003", "example", ".*\\..*");
+    $conn->subscribe("example", ".*\\..*");
 
     while (true) {
         $message = $conn->get(100);
@@ -95,7 +95,8 @@ try {
     echo $e->getMessage(), PHP_EOL;
 }
 ````
-![效果图](assets/effect.gif)
+
+![运行效果图](assets/effect.gif)
 
 
 更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/sample/index.php)
