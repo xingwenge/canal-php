@@ -1,6 +1,8 @@
 <?php
 namespace client;
 
+use MongoDB\BSON\Binary;
+
 class TcpClient
 {
 
@@ -267,7 +269,7 @@ class TcpClient
     }
 
     /**
-     * @param $buf Binary data
+     * @param string|false $buf Binary data
      * @throws \Exception
      */
     public function write($buf)

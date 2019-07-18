@@ -27,12 +27,12 @@ class SimpleCanalConnector implements CanalConnector
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __destruct()
     {
-        if ($this->socket) {
-            $this->rollback(0);
-            $this->socket->close();
-        }
+        $this->disConnect();
     }
 
     /**
@@ -66,9 +66,15 @@ class SimpleCanalConnector implements CanalConnector
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function disConnect()
     {
-        $this->socket->close();
+        if ($this->socket) {
+            $this->rollback(0);
+            $this->socket->close();
+        }
     }
 
     /**
@@ -102,12 +108,20 @@ class SimpleCanalConnector implements CanalConnector
         }
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function readNextPacket()
     {
         $data = $this->socket->read($this->packetLen);
         return $this->socket->read(unpack("N", $data)[1]);
     }
 
+    /**
+     * @param $data
+     * @throws \Exception
+     */
     private function writeWithHeader($data)
     {
         $this->socket->write(pack("N", strlen($data)));
@@ -233,6 +247,7 @@ class SimpleCanalConnector implements CanalConnector
 
     /**
      * @param int $messageId
+     * @throws \Exception
      */
     public function ack($messageId=0)
     {
@@ -250,6 +265,10 @@ class SimpleCanalConnector implements CanalConnector
         }
     }
 
+    /**
+     * @param int $batchId
+     * @throws \Exception
+     */
     public function rollback($batchId=0)
     {
         $cb = new ClientRollback();
