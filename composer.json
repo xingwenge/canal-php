@@ -1,7 +1,7 @@
 {
     "name": "xingwenge/canal",
-    "description": "connent cannal server.",
-    "type": "project",
+    "description": "connent cannal server via php client.",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -11,7 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "google/protobuf": "^3.8"
+        "google/protobuf": "^3.8",
+        "php":  ">=5.6"
     },
     "autoload": {
         "psr-4": {
