@@ -1,8 +1,8 @@
 <?php
-namespace sample;
+namespace xingwenge\canal_php\sample;
 
-use xingwenge\canal\php\Fmt;
-use xingwenge\canal\php\socket\CanalConnector;
+use xingwenge\canal_php\Fmt;
+use xingwenge\canal_php\socket\CanalConnector;
 
 require_once __DIR__. '/../../vendor/autoload.php';
 

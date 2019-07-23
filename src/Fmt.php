@@ -1,5 +1,5 @@
 <?php
-namespace xingwenge\canal\php;
+namespace xingwenge\canal_php;
 
 use Com\Alibaba\Otter\Canal\Protocol\Column;
 use Com\Alibaba\Otter\Canal\Protocol\Entry;

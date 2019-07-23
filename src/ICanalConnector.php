@@ -1,5 +1,5 @@
 <?php
-namespace xingwenge\canal\php;
+namespace xingwenge\canal_php;
 
 interface ICanalConnector
 {

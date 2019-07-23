@@ -1,5 +1,5 @@
 <?php
-namespace xingwenge\canal\php\socket;
+namespace xingwenge\canal_php\socket;
 
 class TcpClient
 {
