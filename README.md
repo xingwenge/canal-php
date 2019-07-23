@@ -65,7 +65,7 @@ Canal 的安装以及配置使用请查看 https://github.com/alibaba/canal/wiki
 ### 构建canal php客户端
 
 ````shell
-$ composer require xingwenge/canal/php
+$ composer require xingwenge/canal_php
 
 or
 
