@@ -97,6 +97,7 @@ try {
     $conn->disConnect();
 } catch (\Exception $e) {
     echo $e->getMessage(), PHP_EOL;
+}
 ````
 
 ![运行效果图](assets/effect.gif)

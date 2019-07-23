@@ -117,7 +117,8 @@ class CanalConnector implements ICanalConnector
     private function readNextPacket()
     {
         $data = $this->socket->read($this->packetLen);
-        return $this->socket->read(unpack("N", $data)[1]);
+        $dataLen = unpack("N", $data)[1];
+        return $this->socket->read($dataLen);
     }
 
     /**

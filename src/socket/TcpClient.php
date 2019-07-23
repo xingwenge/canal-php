@@ -208,7 +208,7 @@ class TcpClient
      * @return string Binary data
      * @throws \Exception
      */
-    public function readAll($len)
+    public function read($len)
     {
         if ($this->sendTimeoutSet_) {
             stream_set_timeout($this->handle_, 0, $this->recvTimeout * 1000000);
@@ -239,33 +239,6 @@ class TcpClient
                 return $pre . $buf;
             }
         }
-    }
-
-    /**
-     * Read from the socket
-     *
-     * @param int $len
-     *  How many bytes
-     * @return string Binary data
-     * @throws \Exception
-     *
-     */
-    public function read($len)
-    {
-        if ($this->sendTimeoutSet_) {
-            stream_set_timeout($this->handle_, 0, $this->recvTimeout * 1000000);
-            $this->sendTimeoutSet_ = false;
-        }
-        $data = fread($this->handle_, $len);
-        if ($data === false || $data === '') {
-            $md = stream_get_meta_data($this->handle_);
-            if ($md['timed_out']) {
-                throw new \Exception('TSocket: timed out reading ' . $len . ' bytes from ' . $this->host_ . ':' . $this->port_);
-            } else {
-                throw new \Exception('TSocket: Could not read ' . $len . ' bytes from ' . $this->host_ . ':' . $this->port_);
-            }
-        }
-        return $data;
     }
 
     /**

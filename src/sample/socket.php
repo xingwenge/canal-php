@@ -6,6 +6,9 @@ use xingwenge\canal_php\socket\CanalConnector;
 
 require_once __DIR__. '/../../vendor/autoload.php';
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 try {
     $conn = new CanalConnector();
     $conn->connect("127.0.0.1", 11111, 10, 1800, 1800);
@@ -13,7 +16,7 @@ try {
     $conn->subscribe("example", ".*\\..*");
 
     while (true) {
-        $message = $conn->get(10);
+        $message = $conn->get(100);
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {
