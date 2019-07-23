@@ -1,5 +1,5 @@
 {
-    "name": "xingwenge/canal",
+    "name": "xingwenge/canal/php",
     "description": "connent cannal server via php client.",
     "type": "library",
     "license": "MIT",
@@ -16,9 +16,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Com\\Alibaba\\Otter\\Canal\\Protocol\\": "protocol/Com/Alibaba/Otter/Canal/Protocol/",
-            "GPBMetadata\\": "protocol/GPBMetadata/",
-            "client\\": "client/"
+            "Com\\Alibaba\\Otter\\Canal\\Protocol\\": "src/protocol/Com/Alibaba/Otter/Canal/Protocol/",
+            "GPBMetadata\\": "src/protocol/GPBMetadata/",
+            "xingwenge\\canal\\php\\": "src/"
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
-namespace client;
+namespace xingwenge\canal\php\socket;
 
+use xingwenge\canal\php\ICanalConnector;
 use Com\Alibaba\Otter\Canal\Protocol\Ack;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAck;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAuth;
@@ -11,8 +12,9 @@ use Com\Alibaba\Otter\Canal\Protocol\Messages;
 use Com\Alibaba\Otter\Canal\Protocol\Packet;
 use Com\Alibaba\Otter\Canal\Protocol\PacketType;
 use Com\Alibaba\Otter\Canal\Protocol\Sub;
+use xingwenge\canal\php\Message;
 
-class SimpleCanalConnector implements CanalConnector
+class CanalConnector implements ICanalConnector
 {
     /** @var TcpClient */
     protected $socket;

@@ -1,7 +1,5 @@
 <?php
-namespace client;
-
-use MongoDB\BSON\Binary;
+namespace xingwenge\canal\php\socket;
 
 class TcpClient
 {
@@ -159,6 +157,8 @@ class TcpClient
 
     /**
      * Connects the socket.
+     *
+     * @throws \Exception
      */
     public function open()
     {
@@ -204,7 +204,7 @@ class TcpClient
     /**
      * Uses stream get contents to do the reading
      *
-     * @param $len How many bytes
+     * @param int $len How many bytes
      * @return string Binary data
      * @throws \Exception
      */
@@ -294,6 +294,7 @@ class TcpClient
 
     /**
      * Flush output to the socket.
+     * @throws \Exception
      */
     public function flush()
     {

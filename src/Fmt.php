@@ -1,5 +1,5 @@
 <?php
-namespace client;
+namespace xingwenge\canal\php;
 
 use Com\Alibaba\Otter\Canal\Protocol\Column;
 use Com\Alibaba\Otter\Canal\Protocol\Entry;
@@ -8,7 +8,7 @@ use Com\Alibaba\Otter\Canal\Protocol\EventType;
 use Com\Alibaba\Otter\Canal\Protocol\RowChange;
 use Com\Alibaba\Otter\Canal\Protocol\RowData;
 
-class Show
+class Fmt
 {
     /**
      * @param Entry $entry

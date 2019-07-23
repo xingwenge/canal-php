@@ -1,13 +1,13 @@
 <?php
 namespace sample;
 
-use client\Show;
-use client\SimpleCanalConnector;
+use xingwenge\canal\php\Fmt;
+use xingwenge\canal\php\socket\CanalConnector;
 
-require_once __DIR__. '/../init.php';
+require_once __DIR__. '/../../vendor/autoload.php';
 
 try {
-    $conn = new SimpleCanalConnector();
+    $conn = new CanalConnector();
     $conn->connect("127.0.0.1", 11111, 10, 1800, 1800);
     $conn->checkValid();
     $conn->subscribe("example", ".*\\..*");
@@ -17,7 +17,7 @@ try {
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {
-                Show::println($entry);
+                Fmt::println($entry);
             }
         }
         sleep(1);

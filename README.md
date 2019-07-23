@@ -65,6 +65,10 @@ Canal 的安装以及配置使用请查看 https://github.com/alibaba/canal/wiki
 ### 构建canal php客户端
 
 ````shell
+$ composer require xingwenge/canal/php
+
+or
+
 $ git clone https://github.com/xingwenge/canal-php.git
 $ cd canal-php
 $ composer update
@@ -74,7 +78,7 @@ $ composer update
 
 ````php
 try {
-    $conn = new SimpleCanalConnector();
+    $conn = new CanalConnector();
     $conn->connect("127.0.0.1", 11111, 10, 1800, 1800);
     $conn->checkValid();
     $conn->subscribe("example", ".*\\..*");
@@ -84,7 +88,7 @@ try {
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {
-                Show::println($entry);
+                Fmt::println($entry);
             }
         }
         sleep(1);
@@ -93,11 +97,10 @@ try {
     $conn->disConnect();
 } catch (\Exception $e) {
     echo $e->getMessage(), PHP_EOL;
-}
 ````
 
 ![运行效果图](assets/effect.gif)
 
 
-更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/sample/index.php)
+更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/socket.php)
 

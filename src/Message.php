@@ -1,5 +1,5 @@
 <?php
-namespace client;
+namespace xingwenge\canal\php;
 
 use Com\Alibaba\Otter\Canal\Protocol\Entry;
 

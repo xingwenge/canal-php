@@ -1,7 +1,7 @@
 <?php
-namespace client;
+namespace xingwenge\canal\php;
 
-interface CanalConnector
+interface ICanalConnector
 {
     public function connect();
     public function disConnect();
