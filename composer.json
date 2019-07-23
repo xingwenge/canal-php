@@ -1,6 +1,6 @@
 {
     "name": "xingwenge/canal_php",
-    "description": "connent cannal server via php client.",
+    "description": "connect canal server via php client.",
     "type": "library",
     "license": "MIT",
     "authors": [
