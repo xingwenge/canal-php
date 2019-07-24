@@ -1,7 +1,6 @@
 <?php
-namespace xingwenge\canal_php\socket;
+namespace xingwenge\canal_php\adapter;
 
-use xingwenge\canal_php\ICanalConnector;
 use Com\Alibaba\Otter\Canal\Protocol\Ack;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAck;
 use Com\Alibaba\Otter\Canal\Protocol\ClientAuth;
@@ -12,12 +11,12 @@ use Com\Alibaba\Otter\Canal\Protocol\Messages;
 use Com\Alibaba\Otter\Canal\Protocol\Packet;
 use Com\Alibaba\Otter\Canal\Protocol\PacketType;
 use Com\Alibaba\Otter\Canal\Protocol\Sub;
+use xingwenge\canal_php\ICanalConnector;
 use xingwenge\canal_php\Message;
 
-class CanalConnector implements ICanalConnector
+abstract class CanalConnectorBase implements ICanalConnector
 {
-    /** @var TcpClient */
-    protected $socket;
+    protected $client;
     protected $readTimeout;
     protected $writeTimeout;
     protected $packetLen = 4;
@@ -38,50 +37,39 @@ class CanalConnector implements ICanalConnector
     }
 
     /**
-     * @param $host
-     * @param $port
+     * @param string $host
+     * @param int $port
      * @param int $connectionTimeout
-     *  Timeout in seconds
      * @param int $readTimeout
-     *  Timeout in seconds
      * @param int $writeTimeout
-     *  Timeout in seconds
      * @throws \Exception
      */
-    public function connect($host = 'localhost', $port = 9090, $connectionTimeout=10, $readTimeout = 3600, $writeTimeout = 3600)
+    public function connect($host="127.0.0.1", $port=11111, $connectionTimeout=10, $readTimeout = 30, $writeTimeout = 30)
     {
+        $this->doConnect($host, $port, $connectionTimeout, $readTimeout, $writeTimeout);
+
         $this->readTimeout = $readTimeout;
         $this->writeTimeout = $writeTimeout;
-
-        $this->socket = new TcpClient($host, $port, true);
-        $this->socket->setConnectTimeout($connectionTimeout);
-        $this->socket->setRecvTimeout($this->readTimeout);
-        $this->socket->setSendTimeout($this->writeTimeout);
-        $this->socket->open();
 
         $data = $this->readNextPacket();
         $packet = new Packet();
         $packet->mergeFromString($data);
 
         if ($packet->getType() != PacketType::HANDSHAKE) {
-            throw new \Exception("conn error.");
+            throw new \Exception("connect error.");
         }
     }
 
-    /**
-     * @throws \Exception
-     */
     public function disConnect()
     {
-        if ($this->socket) {
+        if ($this->client) {
             $this->rollback(0);
-            $this->socket->close();
         }
     }
 
     /**
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
      * @throws \Exception
      */
     public function checkValid($username="", $password="")
@@ -111,34 +99,14 @@ class CanalConnector implements ICanalConnector
     }
 
     /**
-     * @return string
-     * @throws \Exception
-     */
-    private function readNextPacket()
-    {
-        $data = $this->socket->read($this->packetLen);
-        $dataLen = unpack("N", $data)[1];
-        return $this->socket->read($dataLen);
-    }
-
-    /**
-     * @param $data
-     * @throws \Exception
-     */
-    private function writeWithHeader($data)
-    {
-        $this->socket->write(pack("N", strlen($data)));
-        $this->socket->write($data);
-    }
-
-    /**
+     * @param int $clientId
      * @param string $destination
      * @param string $filter
      * @throws \Exception
      */
-    public function subscribe($destination = "example", $filter = ".*\\..*")
+    public function subscribe($clientId=1001, $destination = "example", $filter = ".*\\..*")
     {
-        $this->clientId = 1001;
+        $this->clientId = $clientId;
         $this->destination = $destination;
 
         $this->rollback(0);
@@ -175,11 +143,10 @@ class CanalConnector implements ICanalConnector
 
     /**
      * @param int $size
-     *  batch size.
-     * @return Message|mixed
+     * @return Message
      * @throws \Exception
      */
-    public function get($size=10)
+    public function get($size=100)
     {
         $message = $this->getWithoutAck($size);
         $this->ack($message->getId());
@@ -187,8 +154,6 @@ class CanalConnector implements ICanalConnector
     }
 
     /**
-     * 允许指定batchSize，一次可以获取多条，每次返回的对象为Message
-     *
      * @param int $batchSize
      * @param int $timeout
      * @param int $unit
@@ -248,10 +213,6 @@ class CanalConnector implements ICanalConnector
         return $message;
     }
 
-    /**
-     * @param int $messageId
-     * @throws \Exception
-     */
     public function ack($messageId=0)
     {
         if ($messageId) {
@@ -268,10 +229,6 @@ class CanalConnector implements ICanalConnector
         }
     }
 
-    /**
-     * @param int $batchId
-     * @throws \Exception
-     */
     public function rollback($batchId=0)
     {
         $cb = new ClientRollback();
@@ -285,4 +242,10 @@ class CanalConnector implements ICanalConnector
 
         $this->writeWithHeader($packet->serializeToString());
     }
+
+    abstract protected function doConnect($host="127.0.0.1", $port=11111, $connectionTimeout=10, $readTimeout = 30, $writeTimeout = 30);
+
+    abstract protected function readNextPacket();
+
+    abstract protected function writeWithHeader($data);
 }

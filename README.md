@@ -75,16 +75,16 @@ $ composer update
 ````
 
 ### 建立与Canal的连接
-
 ````php
 try {
-    $conn = new CanalConnector();
-    $conn->connect("127.0.0.1", 11111, 10, 1800, 1800);
-    $conn->checkValid();
-    $conn->subscribe("example", ".*\\..*");
+    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
+    # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SWOOLE);
+    $client->connect("127.0.0.1", 11111);
+    $client->checkValid();
+    $client->subscribe("1001", "example");
 
     while (true) {
-        $message = $conn->get(10);
+        $message = $client->get(100);
         $entries = $message->getEntries();
         if ($entries) {
             foreach ($entries as $entry) {
@@ -94,7 +94,7 @@ try {
         sleep(1);
     }
 
-    $conn->disConnect();
+    $client->disConnect();
 } catch (\Exception $e) {
     echo $e->getMessage(), PHP_EOL;
 }
@@ -103,5 +103,5 @@ try {
 ![运行效果图](assets/effect.gif)
 
 
-更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/socket.php)
+更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/clientSocket.php)
 
