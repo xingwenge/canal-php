@@ -10,8 +10,9 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 try {
-    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
+    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET_CLUE);
     # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SWOOLE);
+    # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
     $client->connect("127.0.0.1", 11111);
     $client->checkValid();
     $client->subscribe("1001", "example");

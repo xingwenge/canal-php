@@ -12,7 +12,8 @@
     "minimum-stability": "dev",
     "require": {
         "google/protobuf": "^3.8",
-        "php":  ">=5.6"
+        "php":  ">=5.6",
+        "clue/socket-raw": "^1.4"
     },
     "autoload": {
         "psr-4": {

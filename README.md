@@ -77,8 +77,9 @@ $ composer update
 ### 建立与Canal的连接
 ````php
 try {
-    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
+    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET_CLUE);
     # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SWOOLE);
+    # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
     $client->connect("127.0.0.1", 11111);
     $client->checkValid();
     $client->subscribe("1001", "example");
@@ -103,5 +104,5 @@ try {
 ![运行效果图](assets/effect.gif)
 
 
-更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/clientSocket.php)
+更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/client.php)
 
