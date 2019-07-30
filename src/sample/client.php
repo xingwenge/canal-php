@@ -1,6 +1,7 @@
 <?php
 namespace xingwenge\canal_php\sample;
 
+use xingwenge\canal_php\CanalClient;
 use xingwenge\canal_php\CanalConnectorFactory;
 use xingwenge\canal_php\Fmt;
 
@@ -10,12 +11,12 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 try {
-    $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET_CLUE);
-    # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SWOOLE);
-    # $client = CanalConnectorFactory::createClient(CanalConnectorFactory::CLIENT_SOCKET);
+    $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SOCKET_CLUE);
+    # $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SWOOLE);
+    # $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SOCKET);
     $client->connect("127.0.0.1", 11111);
     $client->checkValid();
-    $client->subscribe("1001", "example");
+    $client->subscribe("1001", "example", ".*\\..*");
 
     while (true) {
         $message = $client->get(100);
