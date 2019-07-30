@@ -79,15 +79,15 @@ $ composer update
 try {
     $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SOCKET_CLUE);
     # $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SWOOLE);
-    # $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SOCKET);
+
     $client->connect("127.0.0.1", 11111);
     $client->checkValid();
     $client->subscribe("1001", "example", ".*\\..*");
+    # $client->subscribe("1001", "example", "db_name.tb_name"); # 设置过滤
 
     while (true) {
         $message = $client->get(100);
-        $entries = $message->getEntries();
-        if ($entries) {
+        if ($entries = $message->getEntries()) {
             foreach ($entries as $entry) {
                 Fmt::println($entry);
             }
