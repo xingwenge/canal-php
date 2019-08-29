@@ -106,3 +106,5 @@ try {
 
 更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/client.php)
 
+![canal-php交流群](assets/chat.png)
+
