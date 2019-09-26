@@ -103,8 +103,14 @@ try {
 
 ![运行效果图](assets/effect.gif)
 
-
 更多详情请查看 [Sample](https://github.com/xingwenge/canal-php/blob/master/src/sample/client.php)
+
+### 性能
+本地开发环境
+
+消费速度：sql insert 10000 事件，32秒消耗完成。消费速度 312.5 条/s。
+
+内存使用：4 M。
 
 ![canal-php交流群](assets/chat.png)
 
