@@ -111,6 +111,3 @@ try {
 消费速度：sql insert 10000 事件，32秒消耗完成。消费速度 312.5 条/s。
 
 内存使用：4 M。
-
-![canal-php交流群](assets/chat.png)
-
