@@ -41,17 +41,17 @@ canal-php  是 Canal 的 php 客户端，它与 Canal 是采用的Socket来进�
 
 2.canal-php 与 Canal 建立连接
 
-2.数据库发生变更写入到binlog
+3.数据库发生变更写入到binlog
 
-5.Canal向数据库发送dump请求，获取binlog并解析
+4.Canal向数据库发送dump请求，获取binlog并解析
 
-4.canal-php 向 Canal 请求数据库变更
+5.canal-php 向 Canal 请求数据库变更
 
-4.Canal 发送解析后的数据给canal-php
+6.Canal 发送解析后的数据给canal-php
 
-5.canal-php收到数据，消费成功，发送回执。（可选）
+7.canal-php收到数据，消费成功，发送回执。（可选）
 
-6.Canal记录消费位置。
+8.Canal记录消费位置。
 
 ![架构图](assets/architecture.png)
 
