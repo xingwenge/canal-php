@@ -7,6 +7,7 @@ use Com\Alibaba\Otter\Canal\Protocol\ClientAuth;
 use Com\Alibaba\Otter\Canal\Protocol\ClientRollback;
 use Com\Alibaba\Otter\Canal\Protocol\Entry;
 use Com\Alibaba\Otter\Canal\Protocol\Get;
+use Com\Alibaba\Otter\Canal\Protocol\Handshake;
 use Com\Alibaba\Otter\Canal\Protocol\Messages;
 use Com\Alibaba\Otter\Canal\Protocol\Packet;
 use Com\Alibaba\Otter\Canal\Protocol\PacketType;
@@ -44,7 +45,7 @@ abstract class CanalConnectorBase implements ICanalConnector
      * @param int $writeTimeout
      * @throws \Exception
      */
-    public function connect($host="127.0.0.1", $port=11111, $connectionTimeout=10, $readTimeout = 30, $writeTimeout = 30)
+    public function connect($host = "127.0.0.1", $port = 11111, $user = "", $password = "", $connectionTimeout = 10, $readTimeout = 30, $writeTimeout = 30)
     {
         $this->doConnect($host, $port, $connectionTimeout, $readTimeout, $writeTimeout);
 
@@ -55,9 +56,55 @@ abstract class CanalConnectorBase implements ICanalConnector
         $packet = new Packet();
         $packet->mergeFromString($data);
 
+        // 密码需要通过握手包返回的seed进行哈希
+        if ($user && $password) {
+            $handShake = new Handshake();
+            $handShake->mergeFromString($packet->getBody());
+            $password = bin2hex($this->scramble411($password, $handShake->getSeeds()));
+        }
+        $this->checkValid($user, $password);
+
         if ($packet->getType() != PacketType::HANDSHAKE) {
             throw new \Exception("connect error.");
         }
+    }
+
+
+    /**
+     * @param string $password
+     * @param string $seed
+     * @return false|string
+     */
+    public function scramble411($password, $seed)
+    {
+        $pwd1 = sha1($password, true);
+        $pwd2 = sha1($pwd1, true);
+        $pwd3 = sha1($seed . $pwd2, true);
+
+        $pwd1Bytes = $this->stringToBytes($pwd1);
+        $pwd3Bytes = $this->stringToBytes($pwd3);
+        foreach ($pwd3Bytes as $key => $pwd3Byte) {
+            $pwd3Bytes[$key] ^= $pwd1Bytes[$key];
+        }
+        return $this->bytesToString($pwd3Bytes);
+    }
+
+    /**
+     * @param string $string
+     * @return array|false
+     */
+    public function stringToBytes($string)
+    {
+        return unpack("C*", $string);
+    }
+
+    /**
+     * @param array $bytes
+     * @return false|string
+     */
+    public function bytesToString($bytes)
+    {
+        return pack("C*", ...$bytes);
     }
 
     public function disConnect()

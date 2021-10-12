@@ -15,7 +15,6 @@ try {
     # $client = CanalConnectorFactory::createClient(CanalClient::TYPE_SWOOLE);
 
     $client->connect("127.0.0.1", 11111);
-    $client->checkValid();
     $client->subscribe("1001", "example", ".*\\..*");
     # $client->subscribe("1001", "example", "db_name.tb_name"); # 设置过滤
 
