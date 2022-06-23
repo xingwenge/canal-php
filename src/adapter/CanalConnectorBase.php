@@ -193,11 +193,9 @@ abstract class CanalConnectorBase implements ICanalConnector
      * @return Message
      * @throws \Exception
      */
-    public function get($size=100)
+    public function get($batchSize=100, $timeout=-1, $unit=-1)
     {
-        $message = $this->getWithoutAck($size);
-        $this->ack($message->getId());
-        return $message;
+        return $this->getWithoutAck($batchSize, $timeout, $unit, true);
     }
 
     /**
@@ -207,12 +205,12 @@ abstract class CanalConnectorBase implements ICanalConnector
      * @return Message
      * @throws \Exception
      */
-    public function getWithoutAck($batchSize=10, $timeout=-1, $unit=-1)
+    public function getWithoutAck($batchSize=10, $timeout=-1, $unit=-1, $autoAck=false)
     {
         $get = new Get();
         $get->setClientId($this->clientId);
         $get->setDestination($this->destination);
-        $get->setAutoAck(false);
+        $get->setAutoAck($autoAck);
         $get->setFetchSize($batchSize);
         $get->setTimeout($timeout);
         $get->setUnit($unit);
