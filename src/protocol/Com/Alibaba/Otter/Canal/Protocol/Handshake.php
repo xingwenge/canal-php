@@ -11,16 +11,16 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Handshake</code>
  */
-final class Handshake extends \Google\Protobuf\Internal\Message
+class Handshake extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>bytes seeds = 2;</code>
      */
-    private $seeds = '';
+    protected $seeds = '';
     /**
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.Compression supported_compressions = 3;</code>
      */
-    private $supported_compressions = 0;
+    protected $supported_compressions = 0;
     protected $communication_encoding_present;
 
     /**
@@ -46,6 +46,11 @@ final class Handshake extends \Google\Protobuf\Internal\Message
     public function getCommunicationEncoding()
     {
         return $this->readOneof(1);
+    }
+
+    public function hasCommunicationEncoding()
+    {
+        return $this->hasOneof(1);
     }
 
     /**

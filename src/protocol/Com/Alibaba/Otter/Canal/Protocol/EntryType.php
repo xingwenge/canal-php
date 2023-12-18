@@ -32,9 +32,9 @@ class EntryType
     /**
      ** 心跳类型，内部使用，外部暂不可见，可忽略 *
      *
-     * Generated from protobuf enum <code>HEARTBEAT = 4;</code>
+     * Generated from protobuf enum <code>HEARTBEATINTERNAL = 4;</code>
      */
-    const HEARTBEAT = 4;
+    const HEARTBEATINTERNAL = 4;
     /**
      * Generated from protobuf enum <code>GTIDLOG = 5;</code>
      */
@@ -45,7 +45,7 @@ class EntryType
         self::TRANSACTIONBEGIN => 'TRANSACTIONBEGIN',
         self::ROWDATA => 'ROWDATA',
         self::TRANSACTIONEND => 'TRANSACTIONEND',
-        self::HEARTBEAT => 'HEARTBEAT',
+        self::HEARTBEATINTERNAL => 'HEARTBEATINTERNAL',
         self::GTIDLOG => 'GTIDLOG',
     ];
 

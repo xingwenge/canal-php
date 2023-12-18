@@ -13,16 +13,16 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Dump</code>
  */
-final class Dump extends \Google\Protobuf\Internal\Message
+class Dump extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string journal = 1;</code>
      */
-    private $journal = '';
+    protected $journal = '';
     /**
      * Generated from protobuf field <code>int64 position = 2;</code>
      */
-    private $position = 0;
+    protected $position = 0;
     protected $timestamp_present;
 
     /**
@@ -92,6 +92,11 @@ final class Dump extends \Google\Protobuf\Internal\Message
     public function getTimestamp()
     {
         return $this->readOneof(3);
+    }
+
+    public function hasTimestamp()
+    {
+        return $this->hasOneof(3);
     }
 
     /**

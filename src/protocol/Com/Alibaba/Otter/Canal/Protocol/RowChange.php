@@ -13,20 +13,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.RowChange</code>
  */
-final class RowChange extends \Google\Protobuf\Internal\Message
+class RowChange extends \Google\Protobuf\Internal\Message
 {
     /**
      **tableId,由数据库产生*
      *
      * Generated from protobuf field <code>int64 tableId = 1;</code>
      */
-    private $tableId = 0;
+    protected $tableId = 0;
     /**
      ** ddl/query的sql语句  *
      *
      * Generated from protobuf field <code>string sql = 11;</code>
      */
-    private $sql = '';
+    protected $sql = '';
     /**
      ** 一次数据库变更可能存在多行  *
      *
@@ -44,7 +44,7 @@ final class RowChange extends \Google\Protobuf\Internal\Message
      *
      * Generated from protobuf field <code>string ddlSchemaName = 14;</code>
      */
-    private $ddlSchemaName = '';
+    protected $ddlSchemaName = '';
     protected $eventType_present;
     protected $isDdl_present;
 
@@ -60,9 +60,9 @@ final class RowChange extends \Google\Protobuf\Internal\Message
      *     @type bool $isDdl
      *     @type string $sql
      *          * ddl/query的sql语句  *
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\RowData[]|\Google\Protobuf\Internal\RepeatedField $rowDatas
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\RowData>|\Google\Protobuf\Internal\RepeatedField $rowDatas
      *          * 一次数据库变更可能存在多行  *
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      *     @type string $ddlSchemaName
      *          * ddl/query的schemaName，会存在跨库ddl，需要保留执行ddl的当前schemaName  *
@@ -108,6 +108,11 @@ final class RowChange extends \Google\Protobuf\Internal\Message
         return $this->readOneof(2);
     }
 
+    public function hasEventType()
+    {
+        return $this->hasOneof(2);
+    }
+
     /**
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.EventType eventType = 2;</code>
      * @param int $var
@@ -128,6 +133,11 @@ final class RowChange extends \Google\Protobuf\Internal\Message
     public function getIsDdl()
     {
         return $this->readOneof(10);
+    }
+
+    public function hasIsDdl()
+    {
+        return $this->hasOneof(10);
     }
 
     /**
@@ -184,7 +194,7 @@ final class RowChange extends \Google\Protobuf\Internal\Message
      ** 一次数据库变更可能存在多行  *
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.RowData rowDatas = 12;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\RowData[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\RowData>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setRowDatas($var)
@@ -210,7 +220,7 @@ final class RowChange extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 13;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)

@@ -11,14 +11,14 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Ack</code>
  */
-final class Ack extends \Google\Protobuf\Internal\Message
+class Ack extends \Google\Protobuf\Internal\Message
 {
     /**
      * if something like compression is not supported, erorr_message will tell about it.
      *
      * Generated from protobuf field <code>string error_message = 2;</code>
      */
-    private $error_message = '';
+    protected $error_message = '';
     protected $error_code_present;
 
     /**
@@ -44,6 +44,11 @@ final class Ack extends \Google\Protobuf\Internal\Message
     public function getErrorCode()
     {
         return $this->readOneof(1);
+    }
+
+    public function hasErrorCode()
+    {
+        return $this->hasOneof(1);
     }
 
     /**

@@ -13,16 +13,16 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Pair</code>
  */
-final class Pair extends \Google\Protobuf\Internal\Message
+class Pair extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string key = 1;</code>
      */
-    private $key = '';
+    protected $key = '';
     /**
      * Generated from protobuf field <code>string value = 2;</code>
      */
-    private $value = '';
+    protected $value = '';
 
     /**
      * Constructor.

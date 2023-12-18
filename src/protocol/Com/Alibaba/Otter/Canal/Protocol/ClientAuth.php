@@ -13,34 +13,34 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.ClientAuth</code>
  */
-final class ClientAuth extends \Google\Protobuf\Internal\Message
+class ClientAuth extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string username = 1;</code>
      */
-    private $username = '';
+    protected $username = '';
     /**
      * hashed password with seeds from Handshake message
      *
      * Generated from protobuf field <code>bytes password = 2;</code>
      */
-    private $password = '';
+    protected $password = '';
     /**
      * Generated from protobuf field <code>string destination = 5;</code>
      */
-    private $destination = '';
+    protected $destination = '';
     /**
      * Generated from protobuf field <code>string client_id = 6;</code>
      */
-    private $client_id = '';
+    protected $client_id = '';
     /**
      * Generated from protobuf field <code>string filter = 7;</code>
      */
-    private $filter = '';
+    protected $filter = '';
     /**
      * Generated from protobuf field <code>int64 start_timestamp = 8;</code>
      */
-    private $start_timestamp = 0;
+    protected $start_timestamp = 0;
     protected $net_read_timeout_present;
     protected $net_write_timeout_present;
 
@@ -127,6 +127,11 @@ final class ClientAuth extends \Google\Protobuf\Internal\Message
         return $this->readOneof(3);
     }
 
+    public function hasNetReadTimeout()
+    {
+        return $this->hasOneof(3);
+    }
+
     /**
      * in seconds
      *
@@ -151,6 +156,11 @@ final class ClientAuth extends \Google\Protobuf\Internal\Message
     public function getNetWriteTimeout()
     {
         return $this->readOneof(4);
+    }
+
+    public function hasNetWriteTimeout()
+    {
+        return $this->hasOneof(4);
     }
 
     /**

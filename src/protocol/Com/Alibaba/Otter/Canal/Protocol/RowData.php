@@ -11,7 +11,7 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.RowData</code>
  */
-final class RowData extends \Google\Protobuf\Internal\Message
+class RowData extends \Google\Protobuf\Internal\Message
 {
     /**
      ** 字段信息，增量数据(修改前,删除前) *
@@ -38,11 +38,11 @@ final class RowData extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Column[]|\Google\Protobuf\Internal\RepeatedField $beforeColumns
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Column>|\Google\Protobuf\Internal\RepeatedField $beforeColumns
      *          * 字段信息，增量数据(修改前,删除前) *
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Column[]|\Google\Protobuf\Internal\RepeatedField $afterColumns
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Column>|\Google\Protobuf\Internal\RepeatedField $afterColumns
      *          * 字段信息，增量数据(修改后,新增后)  *
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      * }
      */
@@ -66,7 +66,7 @@ final class RowData extends \Google\Protobuf\Internal\Message
      ** 字段信息，增量数据(修改前,删除前) *
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Column beforeColumns = 1;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Column[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Column>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setBeforeColumns($var)
@@ -92,7 +92,7 @@ final class RowData extends \Google\Protobuf\Internal\Message
      ** 字段信息，增量数据(修改后,新增后)  *
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Column afterColumns = 2;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Column[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Column>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setAfterColumns($var)
@@ -118,7 +118,7 @@ final class RowData extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 3;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)

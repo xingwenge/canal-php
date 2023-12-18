@@ -13,56 +13,56 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Header</code>
  */
-final class Header extends \Google\Protobuf\Internal\Message
+class Header extends \Google\Protobuf\Internal\Message
 {
     /**
      **binlog/redolog 文件名*
      *
      * Generated from protobuf field <code>string logfileName = 2;</code>
      */
-    private $logfileName = '';
+    protected $logfileName = '';
     /**
      **binlog/redolog 文件的偏移位置*
      *
      * Generated from protobuf field <code>int64 logfileOffset = 3;</code>
      */
-    private $logfileOffset = 0;
+    protected $logfileOffset = 0;
     /**
      **服务端serverId*
      *
      * Generated from protobuf field <code>int64 serverId = 4;</code>
      */
-    private $serverId = 0;
+    protected $serverId = 0;
     /**
      ** 变更数据的编码 *
      *
      * Generated from protobuf field <code>string serverenCode = 5;</code>
      */
-    private $serverenCode = '';
+    protected $serverenCode = '';
     /**
      **变更数据的执行时间 *
      *
      * Generated from protobuf field <code>int64 executeTime = 6;</code>
      */
-    private $executeTime = 0;
+    protected $executeTime = 0;
     /**
      ** 变更数据的schemaname*
      *
      * Generated from protobuf field <code>string schemaName = 8;</code>
      */
-    private $schemaName = '';
+    protected $schemaName = '';
     /**
      **变更数据的tablename*
      *
      * Generated from protobuf field <code>string tableName = 9;</code>
      */
-    private $tableName = '';
+    protected $tableName = '';
     /**
      **每个event的长度*
      *
      * Generated from protobuf field <code>int64 eventLength = 10;</code>
      */
-    private $eventLength = 0;
+    protected $eventLength = 0;
     /**
      **预留扩展*
      *
@@ -74,7 +74,7 @@ final class Header extends \Google\Protobuf\Internal\Message
      *
      * Generated from protobuf field <code>string gtid = 13;</code>
      */
-    private $gtid = '';
+    protected $gtid = '';
     protected $version_present;
     protected $sourceType_present;
     protected $eventType_present;
@@ -104,7 +104,7 @@ final class Header extends \Google\Protobuf\Internal\Message
      *     @type int|string $eventLength
      *          *每个event的长度*
      *     @type int $eventType
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      *     @type string $gtid
      *          *当前事务的gitd*
@@ -122,6 +122,11 @@ final class Header extends \Google\Protobuf\Internal\Message
     public function getVersion()
     {
         return $this->readOneof(1);
+    }
+
+    public function hasVersion()
+    {
+        return $this->hasOneof(1);
     }
 
     /**
@@ -276,6 +281,11 @@ final class Header extends \Google\Protobuf\Internal\Message
         return $this->readOneof(7);
     }
 
+    public function hasSourceType()
+    {
+        return $this->hasOneof(7);
+    }
+
     /**
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.Type sourceType = 7;</code>
      * @param int $var
@@ -376,6 +386,11 @@ final class Header extends \Google\Protobuf\Internal\Message
         return $this->readOneof(11);
     }
 
+    public function hasEventType()
+    {
+        return $this->hasOneof(11);
+    }
+
     /**
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.EventType eventType = 11;</code>
      * @param int $var
@@ -404,7 +419,7 @@ final class Header extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 12;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)
