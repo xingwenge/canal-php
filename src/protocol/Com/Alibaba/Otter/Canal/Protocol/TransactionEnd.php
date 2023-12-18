@@ -13,20 +13,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.TransactionEnd</code>
  */
-final class TransactionEnd extends \Google\Protobuf\Internal\Message
+class TransactionEnd extends \Google\Protobuf\Internal\Message
 {
     /**
      **已废弃，请使用header里的executeTime*
      *
      * Generated from protobuf field <code>int64 executeTime = 1;</code>
      */
-    private $executeTime = 0;
+    protected $executeTime = 0;
     /**
      **事务号*
      *
      * Generated from protobuf field <code>string transactionId = 2;</code>
      */
-    private $transactionId = '';
+    protected $transactionId = '';
     /**
      **预留扩展*
      *
@@ -44,7 +44,7 @@ final class TransactionEnd extends \Google\Protobuf\Internal\Message
      *          *已废弃，请使用header里的executeTime*
      *     @type string $transactionId
      *          *事务号*
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      * }
      */
@@ -120,7 +120,7 @@ final class TransactionEnd extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 3;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)

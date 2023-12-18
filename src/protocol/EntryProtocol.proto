@@ -194,7 +194,7 @@ enum EntryType{
 	ROWDATA					=		2;
 	TRANSACTIONEND			=		3;
 	/** 心跳类型，内部使用，外部暂不可见，可忽略 **/
-	HEARTBEAT				=		4;
+	HEARTBEATINTERNAL		=		4;
 	GTIDLOG                 =       5;
 }
 

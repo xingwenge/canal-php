@@ -13,20 +13,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Sub</code>
  */
-final class Sub extends \Google\Protobuf\Internal\Message
+class Sub extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string destination = 1;</code>
      */
-    private $destination = '';
+    protected $destination = '';
     /**
      * Generated from protobuf field <code>string client_id = 2;</code>
      */
-    private $client_id = '';
+    protected $client_id = '';
     /**
      * Generated from protobuf field <code>string filter = 7;</code>
      */
-    private $filter = '';
+    protected $filter = '';
 
     /**
      * Constructor.

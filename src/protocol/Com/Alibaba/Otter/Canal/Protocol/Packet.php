@@ -11,16 +11,16 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Packet</code>
  */
-final class Packet extends \Google\Protobuf\Internal\Message
+class Packet extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.PacketType type = 3;</code>
      */
-    private $type = 0;
+    protected $type = 0;
     /**
      * Generated from protobuf field <code>bytes body = 5;</code>
      */
-    private $body = '';
+    protected $body = '';
     protected $magic_number_present;
     protected $version_present;
     protected $compression_present;
@@ -52,6 +52,11 @@ final class Packet extends \Google\Protobuf\Internal\Message
         return $this->readOneof(1);
     }
 
+    public function hasMagicNumber()
+    {
+        return $this->hasOneof(1);
+    }
+
     /**
      * Generated from protobuf field <code>int32 magic_number = 1;</code>
      * @param int $var
@@ -72,6 +77,11 @@ final class Packet extends \Google\Protobuf\Internal\Message
     public function getVersion()
     {
         return $this->readOneof(2);
+    }
+
+    public function hasVersion()
+    {
+        return $this->hasOneof(2);
     }
 
     /**
@@ -116,6 +126,11 @@ final class Packet extends \Google\Protobuf\Internal\Message
     public function getCompression()
     {
         return $this->readOneof(4);
+    }
+
+    public function hasCompression()
+    {
+        return $this->hasOneof(4);
     }
 
     /**

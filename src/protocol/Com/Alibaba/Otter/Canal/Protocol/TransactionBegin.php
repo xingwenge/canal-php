@@ -13,20 +13,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.TransactionBegin</code>
  */
-final class TransactionBegin extends \Google\Protobuf\Internal\Message
+class TransactionBegin extends \Google\Protobuf\Internal\Message
 {
     /**
      **已废弃，请使用header里的executeTime*
      *
      * Generated from protobuf field <code>int64 executeTime = 1;</code>
      */
-    private $executeTime = 0;
+    protected $executeTime = 0;
     /**
      **已废弃，Begin里不提供事务id*
      *
      * Generated from protobuf field <code>string transactionId = 2;</code>
      */
-    private $transactionId = '';
+    protected $transactionId = '';
     /**
      **预留扩展*
      *
@@ -38,7 +38,7 @@ final class TransactionBegin extends \Google\Protobuf\Internal\Message
      *
      * Generated from protobuf field <code>int64 threadId = 4;</code>
      */
-    private $threadId = 0;
+    protected $threadId = 0;
 
     /**
      * Constructor.
@@ -50,7 +50,7 @@ final class TransactionBegin extends \Google\Protobuf\Internal\Message
      *          *已废弃，请使用header里的executeTime*
      *     @type string $transactionId
      *          *已废弃，Begin里不提供事务id*
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      *     @type int|string $threadId
      *          *执行的thread Id*
@@ -128,7 +128,7 @@ final class TransactionBegin extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 3;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)

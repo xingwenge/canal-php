@@ -12,12 +12,12 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Messages</code>
  */
-final class Messages extends \Google\Protobuf\Internal\Message
+class Messages extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int64 batch_id = 1;</code>
      */
-    private $batch_id = 0;
+    protected $batch_id = 0;
     /**
      * Generated from protobuf field <code>repeated bytes messages = 2;</code>
      */
@@ -30,7 +30,7 @@ final class Messages extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int|string $batch_id
-     *     @type string[]|\Google\Protobuf\Internal\RepeatedField $messages
+     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $messages
      * }
      */
     public function __construct($data = NULL) {
@@ -71,7 +71,7 @@ final class Messages extends \Google\Protobuf\Internal\Message
 
     /**
      * Generated from protobuf field <code>repeated bytes messages = 2;</code>
-     * @param string[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<string>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setMessages($var)

@@ -11,16 +11,16 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.HeartBeat</code>
  */
-final class HeartBeat extends \Google\Protobuf\Internal\Message
+class HeartBeat extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>int64 send_timestamp = 1;</code>
      */
-    private $send_timestamp = 0;
+    protected $send_timestamp = 0;
     /**
      * Generated from protobuf field <code>int64 start_timestamp = 2;</code>
      */
-    private $start_timestamp = 0;
+    protected $start_timestamp = 0;
 
     /**
      * Constructor.

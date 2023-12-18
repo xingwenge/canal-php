@@ -13,38 +13,38 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Column</code>
  */
-final class Column extends \Google\Protobuf\Internal\Message
+class Column extends \Google\Protobuf\Internal\Message
 {
     /**
      **字段下标*
      *
      * Generated from protobuf field <code>int32 index = 1;</code>
      */
-    private $index = 0;
+    protected $index = 0;
     /**
      **字段java中类型*
      *
      * Generated from protobuf field <code>int32 sqlType = 2;</code>
      */
-    private $sqlType = 0;
+    protected $sqlType = 0;
     /**
      **字段名称(忽略大小写)，在mysql中是没有的*
      *
      * Generated from protobuf field <code>string name = 3;</code>
      */
-    private $name = '';
+    protected $name = '';
     /**
      **是否是主键*
      *
      * Generated from protobuf field <code>bool isKey = 4;</code>
      */
-    private $isKey = false;
+    protected $isKey = false;
     /**
      **如果EventType=UPDATE,用于标识这个字段值是否有修改*
      *
      * Generated from protobuf field <code>bool updated = 5;</code>
      */
-    private $updated = false;
+    protected $updated = false;
     /**
      **预留扩展*
      *
@@ -56,19 +56,19 @@ final class Column extends \Google\Protobuf\Internal\Message
      *
      * Generated from protobuf field <code>string value = 8;</code>
      */
-    private $value = '';
+    protected $value = '';
     /**
      ** 对应数据对象原始长度 *
      *
      * Generated from protobuf field <code>int32 length = 9;</code>
      */
-    private $length = 0;
+    protected $length = 0;
     /**
      **字段mysql类型*
      *
      * Generated from protobuf field <code>string mysqlType = 10;</code>
      */
-    private $mysqlType = '';
+    protected $mysqlType = '';
     protected $isNull_present;
 
     /**
@@ -88,7 +88,7 @@ final class Column extends \Google\Protobuf\Internal\Message
      *     @type bool $updated
      *          *如果EventType=UPDATE,用于标识这个字段值是否有修改*
      *     @type bool $isNull
-     *     @type \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $props
+     *     @type array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $props
      *          *预留扩展*
      *     @type string $value
      *          * 字段值,timestamp,Datetime是一个时间格式的文本 *
@@ -242,6 +242,11 @@ final class Column extends \Google\Protobuf\Internal\Message
         return $this->readOneof(6);
     }
 
+    public function hasIsNull()
+    {
+        return $this->hasOneof(6);
+    }
+
     /**
      * Generated from protobuf field <code>bool isNull = 6;</code>
      * @param bool $var
@@ -270,7 +275,7 @@ final class Column extends \Google\Protobuf\Internal\Message
      **预留扩展*
      *
      * Generated from protobuf field <code>repeated .com.alibaba.otter.canal.protocol.Pair props = 7;</code>
-     * @param \Com\Alibaba\Otter\Canal\Protocol\Pair[]|\Google\Protobuf\Internal\RepeatedField $var
+     * @param array<\Com\Alibaba\Otter\Canal\Protocol\Pair>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setProps($var)

@@ -11,20 +11,20 @@ use Google\Protobuf\Internal\GPBUtil;
 /**
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.ClientRollback</code>
  */
-final class ClientRollback extends \Google\Protobuf\Internal\Message
+class ClientRollback extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string destination = 1;</code>
      */
-    private $destination = '';
+    protected $destination = '';
     /**
      * Generated from protobuf field <code>string client_id = 2;</code>
      */
-    private $client_id = '';
+    protected $client_id = '';
     /**
      * Generated from protobuf field <code>int64 batch_id = 3;</code>
      */
-    private $batch_id = 0;
+    protected $batch_id = 0;
 
     /**
      * Constructor.

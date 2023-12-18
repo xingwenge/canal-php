@@ -16,20 +16,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Entry</code>
  */
-final class Entry extends \Google\Protobuf\Internal\Message
+class Entry extends \Google\Protobuf\Internal\Message
 {
     /**
      **协议头部信息*
      *
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.Header header = 1;</code>
      */
-    private $header = null;
+    protected $header = null;
     /**
      **传输的二进制数组*
      *
      * Generated from protobuf field <code>bytes storeValue = 3;</code>
      */
-    private $storeValue = '';
+    protected $storeValue = '';
     protected $entryType_present;
 
     /**
@@ -54,11 +54,21 @@ final class Entry extends \Google\Protobuf\Internal\Message
      **协议头部信息*
      *
      * Generated from protobuf field <code>.com.alibaba.otter.canal.protocol.Header header = 1;</code>
-     * @return \Com\Alibaba\Otter\Canal\Protocol\Header
+     * @return \Com\Alibaba\Otter\Canal\Protocol\Header|null
      */
     public function getHeader()
     {
         return $this->header;
+    }
+
+    public function hasHeader()
+    {
+        return isset($this->header);
+    }
+
+    public function clearHeader()
+    {
+        unset($this->header);
     }
 
     /**
@@ -83,6 +93,11 @@ final class Entry extends \Google\Protobuf\Internal\Message
     public function getEntryType()
     {
         return $this->readOneof(2);
+    }
+
+    public function hasEntryType()
+    {
+        return $this->hasOneof(2);
     }
 
     /**

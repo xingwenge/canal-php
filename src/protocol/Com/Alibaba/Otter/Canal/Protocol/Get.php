@@ -13,20 +13,20 @@ use Google\Protobuf\Internal\GPBUtil;
  *
  * Generated from protobuf message <code>com.alibaba.otter.canal.protocol.Get</code>
  */
-final class Get extends \Google\Protobuf\Internal\Message
+class Get extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string destination = 1;</code>
      */
-    private $destination = '';
+    protected $destination = '';
     /**
      * Generated from protobuf field <code>string client_id = 2;</code>
      */
-    private $client_id = '';
+    protected $client_id = '';
     /**
      * Generated from protobuf field <code>int32 fetch_size = 3;</code>
      */
-    private $fetch_size = 0;
+    protected $fetch_size = 0;
     protected $timeout_present;
     protected $unit_present;
     protected $auto_ack_present;
@@ -130,6 +130,11 @@ final class Get extends \Google\Protobuf\Internal\Message
         return $this->readOneof(4);
     }
 
+    public function hasTimeout()
+    {
+        return $this->hasOneof(4);
+    }
+
     /**
      * 默认-1时代表不控制
      *
@@ -156,6 +161,11 @@ final class Get extends \Google\Protobuf\Internal\Message
         return $this->readOneof(5);
     }
 
+    public function hasUnit()
+    {
+        return $this->hasOneof(5);
+    }
+
     /**
      * 数字类型，0:纳秒,1:毫秒,2:微秒,3:秒,4:分钟,5:小时,6:天
      *
@@ -180,6 +190,11 @@ final class Get extends \Google\Protobuf\Internal\Message
     public function getAutoAck()
     {
         return $this->readOneof(6);
+    }
+
+    public function hasAutoAck()
+    {
+        return $this->hasOneof(6);
     }
 
     /**
